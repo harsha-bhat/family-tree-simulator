@@ -13,18 +13,9 @@ GET_RELATIONSHIP "Node_Name" "Relationship"
 Supported Relationships
 
 ```
-Mother
-Father
-Husband
-Wife
-Spouse
 Son
 Daughter
 Siblings
-Mother-In-Law
-Father-In-Law
-Daughter-In-Law
-Son-In-Law
 Maternal-Uncle
 Paternal-Uncle
 Maternal-Aunt

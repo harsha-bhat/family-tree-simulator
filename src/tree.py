@@ -16,16 +16,17 @@ class Tree:
         Find node in tree with given name
         """
         seen = set()
+
         queue = deque([self.root])
         node = None
         while queue:
             node = queue.popleft()
             if node and node not in seen:
                 seen.add(node)
-                if node.name == name:
+                if node.get_name() == name:
                     break
-                queue.append(node.spouse)
-                queue.extend(node.children)
+                queue.append(node.spouse())
+                queue.extend(node.get_children())
         return node
 
     def add_spouse(self, to: str, spouse_name: str) -> None:
@@ -35,13 +36,18 @@ class Tree:
         node = self.find_node(to)
         if not node:
             return "PERSON_NOT_FOUND"
+
+        spouse_gender = TreeNode.GENDER_MALE
+        if node.is_male():
+            spouse_gender = TreeNode.GENDER_FEMALE
+
         spouse = TreeNode(
             spouse_name,
-            "Male" if node.gender == "Female" else "Female",
+            spouse_gender,
             node,
-            node.children,
+            node.get_children(),
         )
-        node.spouse = spouse
+        node.set_spouse(spouse)
         return "SPOUSE_ADDITION_SUCCEEDED"
 
     def add_child(self, to: str, child_name: str, child_gender: str) -> None:
@@ -51,9 +57,10 @@ class Tree:
         node = self.find_node(to)
         if not node:
             return "PERSON_NOT_FOUND"
-        if node.gender != "Female":
+
+        if node.is_male():
             return "CHILD_ADDITION_FAILED"
 
-        child = TreeNode(child_name, child_gender, None, [], node, node.spouse)
-        node.children.append(child)
+        child = TreeNode(child_name, child_gender, None, [], node, node.spouse())
+        node.add_child(child)
         return "CHILD_ADDITION_SUCCEEDED"

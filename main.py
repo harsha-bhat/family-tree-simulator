@@ -3,11 +3,13 @@ import sys
 from src.relationship_tree import RelationshipTree
 from src.util import command
 
+INIT_FILE = "data/init.txt"
+
 if __name__ == "__main__":
     tree = None
 
     # Initialize tree
-    for line in open("data/init.txt").readlines():
+    for line in open(INIT_FILE).readlines():
         line = line.strip()
         if line:
             op, *args = line.split()
